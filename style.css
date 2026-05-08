@@ -664,6 +664,7 @@ footer b {
   padding: 40px;
   box-shadow: 0 8px 40px rgba(13, 43, 94, .12);
   overflow-x: auto;
+  overflow-y: hidden;
   display: block;
 }
 
@@ -1113,4 +1114,503 @@ footer b {
   color: var(--blue2);
   font-weight: 700;
   cursor: pointer;
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE  –  Tablet  (≤ 1024px)
+════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+
+  /* Navbar */
+  .navbar {
+    padding: 0 20px;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 64px;
+    gap: 8px;
+  }
+
+  .nav-right {
+    gap: 10px;
+  }
+
+  .nav-owner {
+    display: none;
+  }
+
+  /* Hero */
+  .hero {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .hero-left {
+    width: 100%;
+    padding: 48px 36px;
+    min-height: auto;
+  }
+
+  .hero-right {
+    padding: 32px 24px;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  /* Resume wrap (demo) */
+  .resume-wrap {
+    width: 320px;
+    height: 452px;
+  }
+
+  .scale-wrap {
+    transform: scale(0.40);
+  }
+
+  /* Preview box */
+  .preview-box {
+    width: 320px;
+    height: 452px;
+  }
+
+  /* Builder */
+  .builder-page {
+    flex-direction: column;
+  }
+
+  .builder-form {
+    width: 100%;
+    max-height: none;
+  }
+
+  .builder-preview {
+    width: 100%;
+  }
+
+  /* Template page */
+  .tpl-page {
+    padding: 28px 32px;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE  –  Mobile  (≤ 768px)
+════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Navbar ── */
+  .navbar {
+    padding: 10px 16px;
+    height: auto;
+    gap: 8px;
+  }
+
+  .t1 {
+    font-size: 18px;
+  }
+
+  .t2 {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .nav-right {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-link {
+    font-size: 11px;
+  }
+
+  .nbtn {
+    padding: 6px 13px;
+    font-size: 12px;
+  }
+
+  #userGreet {
+    font-size: 12px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    flex-direction: column;
+  }
+
+  .hero-left {
+    width: 100%;
+    padding: 36px 22px 32px;
+    text-align: center;
+  }
+
+  .hero-left::before,
+  .hero-left::after {
+    display: none;
+  }
+
+  .hero-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    margin-bottom: 14px;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .hero-btns {
+    justify-content: center;
+  }
+
+  .btn-yellow,
+  .btn-wht {
+    padding: 11px 24px;
+    font-size: 14px;
+  }
+
+  .hero-stats {
+    justify-content: center;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .stat-num {
+    font-size: 26px;
+  }
+
+  /* Hide demo resume on mobile — it clutters small screens */
+  .hero-right {
+    display: none;
+  }
+
+  /* ── Features ── */
+  .features {
+    padding: 24px 20px;
+    gap: 16px;
+  }
+
+  .feat-desc {
+    max-width: 100%;
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 16px 12px;
+    font-size: 11px;
+  }
+
+  /* ── Template page ── */
+  .tpl-page {
+    padding: 20px 16px;
+  }
+
+  .tpl-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tpl-title {
+    font-size: 26px;
+  }
+
+  .tpl-btns {
+    width: 100%;
+  }
+
+  .btn-outline-blue,
+  .btn-dark-full {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .full-resume-box {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .tpl-cards {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tpl-feat {
+    flex: unset;
+  }
+
+  /* ── Builder ── */
+  .builder-page {
+    flex-direction: column;
+  }
+
+  .builder-form {
+    width: 100%;
+    max-height: none;
+    padding: 20px 16px;
+  }
+
+  .builder-heading h2 {
+    font-size: 22px;
+  }
+
+  .builder-heading p {
+    font-size: 12px;
+  }
+
+  .tabs {
+    gap: 5px;
+  }
+
+  .tab {
+    padding: 5px 11px;
+    font-size: 11px;
+  }
+
+  .section-card {
+    padding: 18px 14px;
+  }
+
+  .sc-title {
+    font-size: 16px;
+  }
+
+  .save-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-dark,
+  .btn-yellow2,
+  .btn-pdf {
+    flex: unset;
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* Live preview — show a smaller version below the form */
+  .builder-preview {
+    padding: 20px 16px 32px;
+  }
+
+  .preview-box {
+    width: 300px;
+    height: 424px;
+  }
+
+  .scale-wrap {
+    transform: scale(0.378);
+    transform-origin: top left;
+  }
+
+  /* ── Resume card inside full-resume-box (template page) ── */
+  .full-resume-box .resume-card {
+    transform: scale(0.55);
+    transform-origin: top left;
+    margin-bottom: calc((1123px * 0.55) - 100%);
+    /* collapse blank space */
+  }
+
+  /* ── Modals ── */
+  .modal {
+    width: 95%;
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+
+  .m-title {
+    font-size: 22px;
+  }
+
+  .m-sub {
+    margin-bottom: 18px;
+    font-size: 12px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE  –  Small Mobile  (≤ 480px)
+════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-yellow,
+  .btn-wht {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .hero-stats {
+    gap: 16px;
+  }
+
+  .stat-num {
+    font-size: 22px;
+  }
+
+  .stat-lbl {
+    font-size: 10px;
+  }
+
+  .navbar {
+    gap: 6px;
+  }
+
+  .nbtn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .preview-box {
+    width: calc(100vw - 32px);
+    height: calc((100vw - 32px) * 1.414);
+    max-height: 450px;
+  }
+
+  .preview-box .scale-wrap {
+    transform: scale(0.34);
+    transform-origin: top left;
+  }
+
+  .builder-form {
+    padding: 16px 12px;
+  }
+
+  .section-card {
+    padding: 14px 12px;
+  }
+
+  /* Resume on template page – very small screen */
+  .full-resume-box .resume-card {
+    transform: scale(0.40);
+    transform-origin: top left;
+  }
+
+  .tpl-page {
+    padding: 14px 10px;
+  }
+
+  .tpl-title {
+    font-size: 22px;
+  }
+
+  .modal {
+    padding: 22px 14px;
+  }
+
+  .m-title {
+    font-size: 20px;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE  –  Extra-small  (≤ 360px)
+════════════════════════════════════════════════ */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .nbtn {
+    display: none;
+  }
+
+  /* hide extra nav btns, keep only essential */
+  #btnLogin {
+    display: inline-block !important;
+  }
+
+  #btnSignup {
+    display: inline-block !important;
+  }
+
+  #btnLogout {
+    display: inline-block !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE HAMBURGER NAV
+════════════════════════════════════════════════ */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: 2px solid var(--yellow);
+  color: var(--yellow);
+  font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  line-height: 1;
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .nav-hamburger {
+    display: block;
+  }
+
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+    gap: 8px;
+    align-items: flex-start;
+    border-top: 1px solid rgba(255, 255, 255, .15);
+    margin-top: 6px;
+  }
+
+  .nav-right.mobile-open {
+    display: flex;
+  }
+
+  .nav-right .nbtn,
+  .nav-right .nav-link,
+  .nav-right .nav-owner,
+  .nav-right #userGreet {
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-right .nbtn {
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 14px;
+  }
+
+  .nav-right .nav-owner {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    padding-bottom: 8px;
+    font-size: 13px;
+  }
 }

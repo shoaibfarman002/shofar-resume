@@ -600,6 +600,22 @@ async function downloadResumePDF() {
   }
 }
 
+/* ════════════════════════════════════════════════
+   MOBILE NAV TOGGLE
+════════════════════════════════════════════════ */
+function toggleMobileNav() {
+  const nav = document.getElementById("navRight");
+  nav.classList.toggle("mobile-open");
+}
+
+// Close mobile nav when a page changes
+const _origShowPage = showPage;
+function showPage(id) {
+  const nav = document.getElementById("navRight");
+  if (nav) nav.classList.remove("mobile-open");
+  _origShowPage(id);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   refreshNav();
   renderStaticCards();
