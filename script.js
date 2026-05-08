@@ -420,6 +420,9 @@ function updatePreview() {
     userIdName,
     photo,
   );
+
+  // Re-apply dynamic scale so preview fits its container on any screen
+  requestAnimationFrame(applyDynamicScale);
 }
 
 /* ════════════════════════════════════════════════
@@ -601,6 +604,28 @@ async function downloadResumePDF() {
 }
 
 /* ════════════════════════════════════════════════
+   DYNAMIC RESUME SCALE — fills container on any screen
+════════════════════════════════════════════════ */
+function applyDynamicScale() {
+  // All .scale-wrap elements inside .resume-wrap or .preview-box
+  document
+    .querySelectorAll(".resume-wrap .scale-wrap, .preview-box .scale-wrap")
+    .forEach((sw) => {
+      const parent = sw.parentElement;
+      if (!parent) return;
+      const containerW = parent.clientWidth;
+      if (!containerW) return;
+      const scale = containerW / 794; // resume card is always 794px wide
+      sw.style.transform = `scale(${scale})`;
+      sw.style.transformOrigin = "top left";
+      // Adjust parent height to match scaled resume height (794×1123 ratio ≈ 1.414)
+      parent.style.height = Math.round(1123 * scale) + "px";
+    });
+}
+
+window.addEventListener("resize", applyDynamicScale);
+
+/* ════════════════════════════════════════════════
    MOBILE NAV TOGGLE
 ════════════════════════════════════════════════ */
 function toggleMobileNav() {
@@ -614,11 +639,13 @@ function showPage(id) {
   const nav = document.getElementById("navRight");
   if (nav) nav.classList.remove("mobile-open");
   _origShowPage(id);
+  requestAnimationFrame(applyDynamicScale);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   refreshNav();
   renderStaticCards();
+  requestAnimationFrame(applyDynamicScale);
 
   /* Set default photo thumb */
   document.getElementById("photoThumb").src = OWNER_PHOTO;
@@ -632,4 +659,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   /* Initial preview render */
   updatePreview();
+
+  /* Apply dynamic scaling for all devices */
+  requestAnimationFrame(applyDynamicScale);
 });
