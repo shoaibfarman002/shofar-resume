@@ -1229,6 +1229,7 @@ footer b {
     padding: 10px 16px;
     height: auto;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
   .t1 {
@@ -1249,11 +1250,18 @@ footer b {
     font-size: 12px;
   }
 
+  /* ── Hero — stack vertically ── */
+  .hero {
+    flex-direction: column;
+    min-height: auto;
+  }
+
   /* ── Hero left ── */
   .hero-left {
     width: 100%;
     padding: 32px 20px 28px;
     text-align: center;
+    min-height: auto;
   }
 
   .hero-left::before,
@@ -1367,18 +1375,28 @@ footer b {
 
   .tpl-btns {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .btn-outline-blue,
   .btn-dark-full {
     padding: 10px 18px;
     font-size: 13px;
+    flex: 1;
+    text-align: center;
   }
 
   .full-resume-box {
-    padding: 16px;
+    padding: 12px;
     border-radius: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* The resume card inside template page stays at 794px but box scrolls */
+  .full-resume-box .resume-card {
+    min-width: 794px;
   }
 
   .tpl-cards {
@@ -1399,6 +1417,7 @@ footer b {
     width: 100%;
     max-height: none;
     padding: 20px 16px;
+    overflow-y: visible;
   }
 
   .builder-heading h2 {
@@ -1443,6 +1462,7 @@ footer b {
   /* Live preview */
   .builder-preview {
     padding: 20px 16px 32px;
+    overflow-y: visible;
   }
 
   .preview-box {
@@ -1460,6 +1480,8 @@ footer b {
     width: 95%;
     padding: 28px 20px;
     border-radius: 12px;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .m-title {
@@ -1482,6 +1504,10 @@ footer b {
    RESPONSIVE — Small Mobile  (≤ 480px)
 ════════════════════════════════════════════════ */
 @media (max-width: 480px) {
+
+  .hero {
+    flex-direction: column;
+  }
 
   .hero-title {
     font-size: 28px;
