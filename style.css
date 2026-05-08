@@ -661,11 +661,21 @@ footer b {
 .full-resume-box {
   background: #fff;
   border-radius: 16px;
-  padding: 40px;
+  padding: 0;
   box-shadow: 0 8px 40px rgba(13, 43, 94, .12);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   display: block;
+}
+
+/* Scale-to-fit wrapper — JS sets transform and height */
+.full-resume-scaler {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.full-resume-scaler .resume-card {
+  transform-origin: top left;
 }
 
 .tpl-cards {
@@ -1214,8 +1224,7 @@ footer b {
   }
 
   .full-resume-box {
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 }
 
@@ -1387,16 +1396,14 @@ footer b {
   }
 
   .full-resume-box {
-    padding: 12px;
+    padding: 0;
     border-radius: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 
   /* The resume card inside template page stays at 794px but box scrolls */
   .full-resume-box .resume-card {
-    min-width: 794px;
+    min-width: unset;
   }
 
   .tpl-cards {

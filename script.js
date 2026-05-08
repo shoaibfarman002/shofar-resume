@@ -14,25 +14,13 @@ const OWNER_PHOTO =
 const _memStore = {};
 const SafeStorage = {
   getItem(k) {
-    try {
-      return SafeStorage.getItem(k);
-    } catch {
-      return _memStore[k] ?? null;
-    }
+    try { return SafeStorage.getItem(k); } catch { return _memStore[k] ?? null; }
   },
   setItem(k, v) {
-    try {
-      SafeStorage.setItem(k, v);
-    } catch {
-      _memStore[k] = v;
-    }
+    try { SafeStorage.setItem(k, v); } catch { _memStore[k] = v; }
   },
   removeItem(k) {
-    try {
-      SafeStorage.removeItem(k);
-    } catch {
-      delete _memStore[k];
-    }
+    try { SafeStorage.removeItem(k); } catch { delete _memStore[k]; }
   },
 };
 const DB = {
@@ -635,7 +623,7 @@ async function downloadResumePDF() {
    DYNAMIC RESUME SCALE — fills container on any screen
 ════════════════════════════════════════════════ */
 function applyDynamicScale() {
-  // All .scale-wrap elements inside .resume-wrap or .preview-box
+  // Small previews: .resume-wrap and .preview-box
   document
     .querySelectorAll(".resume-wrap .scale-wrap, .preview-box .scale-wrap")
     .forEach((sw) => {
@@ -643,12 +631,25 @@ function applyDynamicScale() {
       if (!parent) return;
       const containerW = parent.clientWidth;
       if (!containerW) return;
-      const scale = containerW / 794; // resume card is always 794px wide
+      const scale = containerW / 794;
       sw.style.transform = `scale(${scale})`;
       sw.style.transformOrigin = "top left";
-      // Adjust parent height to match scaled resume height (794×1123 ratio ≈ 1.414)
       parent.style.height = Math.round(1123 * scale) + "px";
     });
+
+  // Full template page: scale the resume card to fit the box width
+  const scaler = document.getElementById("fullResumeScaler");
+  const card = scaler ? scaler.querySelector(".resume-card") : null;
+  if (scaler && card) {
+    const containerW = scaler.clientWidth;
+    if (containerW) {
+      const scale = containerW / 794;
+      card.style.transform = `scale(${scale})`;
+      card.style.transformOrigin = "top left";
+      // Set the scaler height so page doesn't collapse
+      scaler.style.height = Math.round(1123 * scale) + "px";
+    }
+  }
 }
 
 window.addEventListener("resize", applyDynamicScale);
