@@ -565,11 +565,13 @@ async function downloadResumePDF() {
       photo,
     );
 
-    // Create an off-screen container at full A4 width (794px)
+    // Create an off-screen container at exact A4 size (794×1123px)
+    // Clamp to one page so the captured canvas is never taller than A4
     const container = document.createElement("div");
     container.style.cssText = `
       position: fixed; left: -9999px; top: 0;
-      width: 794px; background: #fff;
+      width: 794px; height: 1123px;
+      overflow: hidden; background: #fff;
       font-family: 'Nunito', sans-serif;
     `;
     container.innerHTML = html;
@@ -600,17 +602,11 @@ async function downloadResumePDF() {
 
     const imgW = canvas.width;
     const imgH = canvas.height;
-    const ratio = pageW / (imgW / 2); // canvas is @2x scale
-    const pdfH = (imgH / 2) * ratio;
 
     const imgData = canvas.toDataURL("image/jpeg", 0.95);
 
-    // Always fit the entire resume on a single page
-    // If content is taller than A4, scale it down to fit
-    const finalH = Math.min(pdfH, pageH);
-    const finalW = (finalH / pdfH) * pageW;
-    const xOffset = (pageW - finalW) / 2;
-    pdf.addImage(imgData, "JPEG", xOffset, 0, finalW, finalH);
+    // Canvas is clamped to A4 — place it to fill the single page exactly
+    pdf.addImage(imgData, "JPEG", 0, 0, pageW, pageH);
 
     const name = d.name ? d.name.replace(/\s+/g, "_") : "Resume";
     pdf.save(name + "_Resume.pdf");
