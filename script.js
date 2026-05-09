@@ -14,13 +14,25 @@ const OWNER_PHOTO =
 const _memStore = {};
 const SafeStorage = {
   getItem(k) {
-    try { return SafeStorage.getItem(k); } catch { return _memStore[k] ?? null; }
+    try {
+      return SafeStorage.getItem(k);
+    } catch {
+      return _memStore[k] ?? null;
+    }
   },
   setItem(k, v) {
-    try { SafeStorage.setItem(k, v); } catch { _memStore[k] = v; }
+    try {
+      SafeStorage.setItem(k, v);
+    } catch {
+      _memStore[k] = v;
+    }
   },
   removeItem(k) {
-    try { SafeStorage.removeItem(k); } catch { delete _memStore[k]; }
+    try {
+      SafeStorage.removeItem(k);
+    } catch {
+      delete _memStore[k];
+    }
   },
 };
 const DB = {
@@ -593,13 +605,12 @@ async function downloadResumePDF() {
 
     const imgData = canvas.toDataURL("image/jpeg", 0.95);
 
-    // If content spans more than one page, split it
-    let yOffset = 0;
-    while (yOffset < pdfH) {
-      if (yOffset > 0) pdf.addPage();
-      pdf.addImage(imgData, "JPEG", 0, -yOffset, pageW, pdfH);
-      yOffset += pageH;
-    }
+    // Always fit the entire resume on a single page
+    // If content is taller than A4, scale it down to fit
+    const finalH = Math.min(pdfH, pageH);
+    const finalW = (finalH / pdfH) * pageW;
+    const xOffset = (pageW - finalW) / 2;
+    pdf.addImage(imgData, "JPEG", xOffset, 0, finalW, finalH);
 
     const name = d.name ? d.name.replace(/\s+/g, "_") : "Resume";
     pdf.save(name + "_Resume.pdf");
