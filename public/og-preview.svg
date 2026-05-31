@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.55" stop-color="#111827"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" x2="1">
+      <stop stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#DBEAFE" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1040" cy="120" r="190" fill="#F59E0B" opacity="0.24"/>
+  <circle cx="220" cy="540" r="230" fill="#2563EB" opacity="0.36"/>
+  <rect x="735" y="96" width="285" height="430" rx="26" fill="url(#card)"/>
+  <rect x="770" y="145" width="84" height="84" rx="24" fill="#2563EB"/>
+  <rect x="879" y="154" width="96" height="14" rx="7" fill="#0F172A"/>
+  <rect x="879" y="184" width="67" height="12" rx="6" fill="#64748B"/>
+  <rect x="770" y="268" width="205" height="12" rx="6" fill="#2563EB"/>
+  <rect x="770" y="304" width="165" height="12" rx="6" fill="#94A3B8"/>
+  <rect x="770" y="340" width="205" height="12" rx="6" fill="#94A3B8"/>
+  <rect x="770" y="398" width="104" height="42" rx="21" fill="#F59E0B"/>
+  <text x="120" y="220" fill="#FFFFFF" font-family="Poppins, Arial" font-size="74" font-weight="800">Top Resume</text>
+  <text x="120" y="305" fill="#FFFFFF" font-family="Poppins, Arial" font-size="74" font-weight="800">Maker Pro</text>
+  <text x="124" y="380" fill="#BFDBFE" font-family="Inter, Arial" font-size="30">Build ATS-friendly resumes in minutes.</text>
+  <text x="124" y="438" fill="#F59E0B" font-family="Inter, Arial" font-size="26" font-weight="700">Designed by Shoaib Farman</text>
+</svg>
