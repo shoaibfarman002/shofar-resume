@@ -890,7 +890,7 @@ function OwnerSection() {
         <div>
           <span className="eyebrow">
             <UserRound size={16} />
-            About Owner
+            About Me 
           </span>
           <h2>Shoaib Farman</h2>
           <h3>Frontend Developer</h3>
