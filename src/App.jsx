@@ -1021,7 +1021,7 @@ function Footer({ scrollTo }) {
           <Mail size={18} />
         </a>
       </div>
-      <p>© 2026 Top Resume Maker Pro | Designed & Developed by Shoaib Farman</p>
+      <p>© 2026 Top Resume Maker Pro | Designed , Developed & Managed by Shoaib Farman</p>
     </footer>
   );
 }
