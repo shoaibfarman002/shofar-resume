@@ -895,7 +895,7 @@ function OwnerSection() {
           <h2>Shoaib Farman</h2>
           <h3>Frontend Developer</h3>
           <p>
-            Passionate Frontend Developer specializing in React.js, JavaScript, UI/UX Design and modern web experiences.
+            Passionate Frontend Developer specializing in React.js, JavaScript, UI/UX Design and modern web experiences. Currently learning JAVA for backend.
           </p>
           <div className="owner-actions">
             <SocialButton href={owner.github} icon={Github} label="View GitHub" />
