@@ -500,7 +500,7 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--text);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(20, 22, 97, 0.384);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
@@ -632,11 +632,11 @@ h3 {
 .card-index {
   position: absolute;
   right: 18px;
-  bottom: 14px;
+  bottom: 190px;
   color: rgba(255, 255, 255, 0.13);
   font-family: "Poppins", sans-serif;
-  font-size: 3rem;
-  font-weight: 900;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 :root[data-theme="light"] .card-index {

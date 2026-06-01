@@ -534,7 +534,7 @@ function Hero({ scrollTo }) {
           </div>
           <div className="floating-pill pill-one">
             <Award size={17} />
-            98% satisfaction
+            99% satisfaction
           </div>
           <div className="floating-pill pill-two">
             <WandSparkles size={17} />
