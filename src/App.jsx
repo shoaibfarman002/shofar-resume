@@ -510,6 +510,17 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+const sectionIconMap = Object.fromEntries(baseSections.map((section) => [section.id, section.icon]));
+
+function safeText(value, fallback = "") {
+  return typeof value === "string" ? value : fallback;
+}
+
+function safeNumber(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
 function createResume(title = "Shoaib Farman Resume") {
   return {
     id: createId(),
@@ -552,6 +563,64 @@ function createResume(title = "Shoaib Farman Resume") {
   };
 }
 
+function normalizeSection(section, fallback = {}) {
+  const id = safeText(section?.id, fallback.id || createId("section"));
+  return {
+    id,
+    title: safeText(section?.title, fallback.title || "Custom Section"),
+    icon: sectionIconMap[id] || FileText,
+    content: safeText(section?.content, fallback.content || "")
+  };
+}
+
+function normalizeResume(resume) {
+  const defaults = createResume(safeText(resume?.title, "Shoaib Farman Resume"));
+  const incomingSections = Array.isArray(resume?.sections) ? resume.sections : [];
+  const sectionMap = new Map(incomingSections.map((section) => [section?.id, section]));
+  const repairedBaseSections = baseSections.map((section) => normalizeSection(sectionMap.get(section.id), section));
+  const customSections = incomingSections
+    .filter((section) => section?.id && !sectionIconMap[section.id])
+    .map((section) => normalizeSection(section));
+
+  return {
+    ...defaults,
+    ...resume,
+    id: safeText(resume?.id, defaults.id),
+    title: safeText(resume?.title, defaults.title),
+    templateId: templates.some((template) => template.id === resume?.templateId) ? resume.templateId : defaults.templateId,
+    accent: safeText(resume?.accent, defaults.accent),
+    second: safeText(resume?.second, defaults.second),
+    createdAt: safeText(resume?.createdAt, defaults.createdAt),
+    updatedAt: safeText(resume?.updatedAt, defaults.updatedAt),
+    profile: {
+      ...defaults.profile,
+      ...(resume?.profile || {}),
+      fullName: safeText(resume?.profile?.fullName, defaults.profile.fullName),
+      role: safeText(resume?.profile?.role, defaults.profile.role),
+      email: safeText(resume?.profile?.email, defaults.profile.email),
+      phone: safeText(resume?.profile?.phone, defaults.profile.phone),
+      location: safeText(resume?.profile?.location, defaults.profile.location),
+      address: safeText(resume?.profile?.address, defaults.profile.address),
+      website: safeText(resume?.profile?.website, defaults.profile.website),
+      photo: safeText(resume?.profile?.photo, defaults.profile.photo),
+      showPhoto: typeof resume?.profile?.showPhoto === "boolean" ? resume.profile.showPhoto : defaults.profile.showPhoto,
+      photoZoom: safeNumber(resume?.profile?.photoZoom, defaults.profile.photoZoom),
+      photoX: safeNumber(resume?.profile?.photoX, defaults.profile.photoX),
+      photoY: safeNumber(resume?.profile?.photoY, defaults.profile.photoY)
+    },
+    socials: {
+      ...defaults.socials,
+      ...(resume?.socials || {})
+    },
+    documents: {
+      ...defaults.documents,
+      ...(resume?.documents || {}),
+      visible: typeof resume?.documents?.visible === "boolean" ? resume.documents.visible : defaults.documents.visible
+    },
+    sections: [...repairedBaseSections, ...customSections]
+  };
+}
+
 function loadState() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -561,7 +630,9 @@ function loadState() {
     }
     const parsed = JSON.parse(stored);
     if (!parsed.resumes?.length) throw new Error("No resumes found");
-    return parsed;
+    const resumes = parsed.resumes.map((resume) => normalizeResume(resume));
+    const activeId = resumes.some((resume) => resume.id === parsed.activeId) ? parsed.activeId : resumes[0].id;
+    return { resumes, activeId };
   } catch {
     const first = createResume();
     return { resumes: [first], activeId: first.id };
@@ -584,12 +655,15 @@ function getTemplate(templateId) {
 }
 
 function calculateResumeMetrics(resume) {
-  const sectionText = resume.sections.map((section) => section.content).join(" ");
+  const profile = resume?.profile || {};
+  const sections = Array.isArray(resume?.sections) ? resume.sections : [];
+  const socialsObject = resume?.socials || {};
+  const sectionText = sections.map((section) => safeText(section?.content)).join(" ");
   const requiredProfile = ["fullName", "role", "email", "phone", "location"];
-  const profileScore = requiredProfile.filter((field) => resume.profile[field]).length / requiredProfile.length;
-  const filledSections = resume.sections.filter((section) => section.content.trim().length > 18).length;
-  const sectionScore = filledSections / resume.sections.length;
-  const socials = Object.values(resume.socials).filter(Boolean).length;
+  const profileScore = requiredProfile.filter((field) => profile[field]).length / requiredProfile.length;
+  const filledSections = sections.filter((section) => safeText(section?.content).trim().length > 18).length;
+  const sectionScore = sections.length ? filledSections / sections.length : 0;
+  const socials = Object.values(socialsObject).filter(Boolean).length;
   const actionWords = ["built", "created", "developed", "optimized", "improved", "managed", "designed", "implemented"];
   const actionScore = actionWords.filter((word) => sectionText.toLowerCase().includes(word)).length / actionWords.length;
   const hasNumbers = /\d/.test(sectionText) ? 1 : 0;
@@ -600,7 +674,7 @@ function calculateResumeMetrics(resume) {
   if (profileScore < 1) suggestions.push("Complete all contact fields for recruiter clarity.");
   if (!hasNumbers) suggestions.push("Add numbers, scale, duration, or impact metrics to improve credibility.");
   if (actionScore < 0.45) suggestions.push("Use stronger action verbs such as built, optimized, improved, and implemented.");
-  if (!resume.sections.find((section) => section.id === "projects")?.content.trim()) {
+  if (!sections.find((section) => section.id === "projects")?.content?.trim()) {
     suggestions.push("Add at least one project with tools, responsibilities, and outcomes.");
   }
   if (!suggestions.length) suggestions.push("Strong foundation. Tailor keywords for each job description before applying.");
