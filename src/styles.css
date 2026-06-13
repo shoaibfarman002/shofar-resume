@@ -106,14 +106,16 @@ img {
 .glass-lite {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(145deg, var(--panel), rgba(255, 255, 255, 0.04));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+  background-color: rgba(15, 23, 42, 0.8);
   box-shadow: var(--shadow);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
 
 .glass-lite {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+  background-color: rgba(15, 23, 42, 0.72);
   box-shadow: none;
 }
 
@@ -504,10 +506,11 @@ input[type="range"] {
 }
 
 .dashboard-preview {
-  min-height: 430px;
+  min-height: 320px;
+  width: 100%;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .metrics-grid {
@@ -1145,8 +1148,9 @@ label {
 
 .resume-stage {
   max-height: calc(100vh - 190px);
-  overflow: auto;
-  padding: 18px;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 16px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background:
@@ -1156,7 +1160,8 @@ label {
 }
 
 .resume-paper {
-  width: 794px;
+  width: min(100%, 794px);
+  max-width: 100%;
   min-height: 1123px;
   margin: 0 auto;
   padding: 42px;
@@ -1168,17 +1173,18 @@ label {
 }
 
 .resume-paper.compact {
-  width: 430px;
+  width: min(100%, 430px);
+  max-width: 100%;
   min-height: 610px;
   padding: 24px;
-  transform: rotate(-1.2deg);
+  transform: none;
 }
 
 .pdf-export-node {
   position: fixed;
   top: 0;
   left: -12000px;
-  width: 794px;
+  width: min(100%, 794px);
   pointer-events: none;
 }
 
@@ -1769,10 +1775,19 @@ label {
 
   .preview-column {
     position: static;
+    width: 100%;
   }
 
   .resume-stage {
     max-height: none;
+  }
+
+  .dashboard-preview {
+    min-height: 260px;
+  }
+
+  .resume-paper {
+    width: min(100%, 720px);
   }
 
   .metrics-grid,
@@ -1789,6 +1804,44 @@ label {
   .app-shell {
     grid-template-columns: 1fr;
     padding: 10px;
+  }
+
+  .preview-column,
+  .builder-column {
+    width: 100%;
+  }
+
+  .resume-stage {
+    padding: 14px;
+  }
+
+  .resume-paper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .resume-paper.compact {
+    transform: none;
+  }
+
+  .template-strip {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+
+  .template-strip button {
+    min-width: 0;
+  }
+
+  .topbar-actions {
+    width: 100%;
+    gap: 10px;
+    justify-content: stretch;
+    flex-wrap: wrap;
+  }
+
+  .topbar-actions > * {
+    min-width: min(100%, 160px);
   }
 
   .side-nav {
@@ -1902,6 +1955,18 @@ label {
 
   .wizard-track button {
     justify-content: center;
+    white-space: normal;
+  }
+
+  .topbar-actions label,
+  .topbar-actions .save-state,
+  .topbar-actions .owner-links,
+  .topbar-actions .icon-button {
+    width: 100%;
+  }
+
+  .topbar-actions .owner-links {
+    justify-content: flex-start;
   }
 
   .action-row .primary-button,
