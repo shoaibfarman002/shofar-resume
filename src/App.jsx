@@ -835,11 +835,57 @@ function App() {
     if (!resumeRef.current || downloading) return;
     setDownloading(true);
     try {
-      const canvas = await html2canvas(resumeRef.current, {
+      // Clone the resume node and inline computed styles to avoid html2canvas parsing
+      // unsupported CSS functions like color-mix. We capture the clone instead.
+      const original = resumeRef.current;
+      const clone = original.cloneNode(true);
+
+      function applyComputedStyles(src, tgt) {
+        const computed = window.getComputedStyle(src);
+        for (let i = 0; i < computed.length; i++) {
+          const prop = computed[i];
+          try {
+            tgt.style.setProperty(prop, computed.getPropertyValue(prop), computed.getPropertyPriority(prop));
+          } catch (e) {
+            // ignore properties that cannot be set
+          }
+        }
+        const srcChildren = Array.from(src.children || []);
+        const tgtChildren = Array.from(tgt.children || []);
+        for (let i = 0; i < srcChildren.length; i++) {
+          applyComputedStyles(srcChildren[i], tgtChildren[i]);
+        }
+      }
+
+      applyComputedStyles(original, clone);
+      clone.classList.add("resume-clone");
+      clone.style.boxSizing = "border-box";
+      clone.style.position = "fixed";
+      clone.style.left = "-12000px";
+      clone.style.top = "0";
+      // Temporary style to disable complex backgrounds/pseudo elements that html2canvas cannot parse
+      const overrideStyle = document.createElement("style");
+      overrideStyle.textContent = `
+        .resume-clone *, .resume-clone *::before, .resume-clone *::after {
+          background: transparent !important;
+          background-image: none !important;
+          box-shadow: none !important;
+          border: none !important;
+          content: none !important;
+        }
+        .resume-clone { background: #ffffff !important; }
+      `;
+      document.head.appendChild(overrideStyle);
+      document.body.appendChild(clone);
+
+      const canvas = await html2canvas(clone, {
         scale: 2,
         backgroundColor: "#ffffff",
         useCORS: true
       });
+      // remove the clone and temporary style after capture
+      document.body.removeChild(clone);
+      document.head.removeChild(overrideStyle);
       const image = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -860,6 +906,7 @@ function App() {
       pdf.save(`${currentResume.profile.fullName || "shofar"}-resume.pdf`);
       showToast("High quality PDF downloaded.");
     } catch (error) {
+      console.error("PDF export error:", error);
       showToast("PDF export failed. Please try again.");
     } finally {
       setDownloading(false);
@@ -910,6 +957,7 @@ function App() {
               duplicateResume={duplicateResume}
               deleteResume={deleteResume}
               downloadPdf={downloadPdf}
+              resumeRef={resumeRef}
               downloading={downloading}
             />
           )}
@@ -1087,6 +1135,7 @@ function Dashboard({
   duplicateResume,
   deleteResume,
   downloadPdf,
+  resumeRef,
   downloading
 }) {
   return (
@@ -1118,7 +1167,7 @@ function Dashboard({
           </div>
         </div>
         <div className="dashboard-preview">
-          <ResumePaper resume={currentResume} template={currentTemplate} compact />
+          <ResumePaper resume={currentResume} template={currentTemplate} compact refProp={resumeRef} />
         </div>
       </section>
 
