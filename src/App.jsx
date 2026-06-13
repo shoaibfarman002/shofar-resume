@@ -58,6 +58,7 @@ import {
   Trash2,
   Trophy,
   Twitter,
+  Youtube,
   Undo2,
   UnlockKeyhole,
   Upload,
@@ -108,6 +109,7 @@ const socialConfigs = [
   { id: "github", label: "GitHub", icon: Github, placeholder: owner.github },
   { id: "linkedin", label: "LinkedIn", icon: Linkedin, placeholder: owner.linkedin },
   { id: "portfolio", label: "Portfolio", icon: Globe2, placeholder: "https://yourportfolio.com" },
+  { id: "youtube", label: "YouTube", icon: Youtube, placeholder: "https://youtube.com/channel/yourchannel" },
   { id: "instagram", label: "Instagram", icon: Instagram, placeholder: owner.instagram },
   { id: "twitter", label: "Twitter/X", icon: Twitter, placeholder: "https://x.com/username" }
 ];
@@ -548,6 +550,7 @@ function createResume(title = "Shoaib Farman Resume") {
       github: owner.github,
       linkedin: owner.linkedin,
       portfolio: "",
+      youtube: "",
       instagram: owner.instagram,
       twitter: ""
     },
